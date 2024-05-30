@@ -3,12 +3,12 @@ import React from 'react'
 export default function Footer() {
   return (
     <>
-    <footer>
+    <footer >
         <hr />
                 <div class="container">
-                    <div class="text-center"><i class="fas fa-ellipsis-h"></i></div>
+                    <div class="text-center"><i class="fas fa-ellipsis-h "></i></div>
 
-                    <div class="row text-center  py-3">
+                    <div class="row text-center  py-3 ">
                         <div class="col-md-8 box">
                             <span class="copyright quick-links">Copyright &copy; 2024
                             &nbsp;&nbsp;<a href="#"> Premium TailwindCSS admin template from WscubeTech.</a>

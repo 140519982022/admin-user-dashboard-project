@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import '../../assets/css/sidebar.css';
+import { Link } from 'react-router-dom';
 
 export default function Sidebar() {
     useEffect(() => {
@@ -34,20 +35,38 @@ export default function Sidebar() {
             element.addEventListener("click", handleDropdownToggle);
         });
 
-        document.querySelector(".menu-toggle").addEventListener("click", handleMenuToggle);
+        const menuToggle = document.querySelector(".menu-toggle");
+        if (menuToggle) {
+            menuToggle.addEventListener("click", handleMenuToggle);
+        }
 
-        // Adding event listeners for the open/close all buttons
-        document.querySelector("#open-all-dropdowns").addEventListener("click", openAllDropdowns);
-        document.querySelector("#close-all-dropdowns").addEventListener("click", closeAllDropdowns);
+        const openButton = document.querySelector("#open-all-dropdowns");
+        if (openButton) {
+            openButton.addEventListener("click", openAllDropdowns);
+        }
+
+        const closeButton = document.querySelector("#close-all-dropdowns");
+        if (closeButton) {
+            closeButton.addEventListener("click", closeAllDropdowns);
+        }
 
         // Cleanup event listeners on component unmount
         return () => {
             document.querySelectorAll(".dashboard-nav-dropdown-toggle").forEach(element => {
                 element.removeEventListener("click", handleDropdownToggle);
             });
-            document.querySelector(".menu-toggle").removeEventListener("click", handleMenuToggle);
-            document.querySelector("#open-all-dropdowns").removeEventListener("click", openAllDropdowns);
-            document.querySelector("#close-all-dropdowns").removeEventListener("click", closeAllDropdowns);
+
+            if (menuToggle) {
+                menuToggle.removeEventListener("click", handleMenuToggle);
+            }
+
+            if (openButton) {
+                openButton.removeEventListener("click", openAllDropdowns);
+            }
+
+            if (closeButton) {
+                closeButton.removeEventListener("click", closeAllDropdowns);
+            }
         };
     }, []);
 
@@ -61,57 +80,44 @@ export default function Sidebar() {
                     </a>
                 </header>
                 <nav className="dashboard-nav-list">
-                    <a href="#" className="dashboard-nav-item"><i className="fas fa-home"></i> Home </a>
-                    {/* <a href="#" className="dashboard-nav-item active"><i className="fas fa-tachometer-alt"></i> Dashboard </a>
-                    <a href="#" className="dashboard-nav-item"><i className="fas fa-file-upload"></i> Upload </a> */}
                     <div className='dashboard-nav-dropdown'>
                         <a href="#!" className="dashboard-nav-item dashboard-nav-dropdown-toggle"><i className="fas fa-photo-video"></i> Courses </a>
                         <div className='dashboard-nav-dropdown-menu'>
-                            <a href="#" className="dashboard-nav-dropdown-item">Add Course</a>
-                            <a href="#" className="dashboard-nav-dropdown-item">View Course</a>
+                            <Link to={'/add-course'} className="dashboard-nav-dropdown-item"><li>Add Course</li></Link>
+                            <Link to={'/view-course'} className="dashboard-nav-dropdown-item"><li>View Course</li></Link>
                         </div>
                     </div>
                     <div className='dashboard-nav-dropdown'>
                         <a href="#!" className="dashboard-nav-item dashboard-nav-dropdown-toggle"><i className="fas fa-users"></i> Videos </a>
                         <div className='dashboard-nav-dropdown-menu'>
-                            <a href="#" className="dashboard-nav-dropdown-item">All</a>
-                            <a href="#" className="dashboard-nav-dropdown-item">Subscribed</a>
-
+                            <Link to={'/add-videos'} className="dashboard-nav-dropdown-item"><li>Add Videos</li></Link>
+                            <Link to={'/view-videos'} className="dashboard-nav-dropdown-item"><li>View Videos</li></Link>
                         </div>
                     </div>
                     <div className='dashboard-nav-dropdown'>
                         <a href="#!" className="dashboard-nav-item dashboard-nav-dropdown-toggle"><i className="fas fa-money-check-alt"></i> Slides </a>
                         <div className='dashboard-nav-dropdown-menu'>
-                            <a href="#" className="dashboard-nav-dropdown-item">All</a>
-                            <a href="#" className="dashboard-nav-dropdown-item">Recent</a>
-                            <a href="#" className="dashboard-nav-dropdown-item">Projections</a>
+                            <Link to={'/add-slider'} className="dashboard-nav-dropdown-item"><li>Add Slides</li></Link>
+                            <Link to={'/view-slider'} className="dashboard-nav-dropdown-item"><li>View Slides</li></Link>
                         </div>
                     </div>
-
                     <div className='dashboard-nav-dropdown'>
                         <a href="#!" className="dashboard-nav-item dashboard-nav-dropdown-toggle"><i className="fas fa-money-check-alt"></i> Team </a>
                         <div className='dashboard-nav-dropdown-menu'>
-                            <a href="#" className="dashboard-nav-dropdown-item">All</a>
-                            <a href="#" className="dashboard-nav-dropdown-item">Recent</a>
-                            <a href="#" className="dashboard-nav-dropdown-item">Projections</a>
+                            <Link to={'/add-team'} className="dashboard-nav-dropdown-item"><li>Add Team</li></Link>
+                            <Link to={'/view-team'} className="dashboard-nav-dropdown-item"><li>View Team</li></Link>
                         </div>
                     </div>
-
                     <div className='dashboard-nav-dropdown'>
                         <a href="#!" className="dashboard-nav-item dashboard-nav-dropdown-toggle"><i className="fas fa-money-check-alt"></i> Users </a>
                         <div className='dashboard-nav-dropdown-menu'>
-                            <a href="#" className="dashboard-nav-dropdown-item">All</a>
-                            <a href="#" className="dashboard-nav-dropdown-item">Recent</a>
-                            <a href="#" className="dashboard-nav-dropdown-item">Projections</a>
+                            <Link to={'/view-users'} className="dashboard-nav-dropdown-item"><li>View User</li></Link>
                         </div>
                     </div>
-                    {/* <a href="#" className="dashboard-nav-item"><i className="fas fa-cogs"></i> Settings </a> */}
-                    {/* <a href="#" className="dashboard-nav-item"><i className="fas fa-user"></i> Profile </a> */}
                     <div className="nav-item-divider"></div>
-                    <a href="#" className="dashboard-nav-item"><i className="fas fa-sign-out-alt"></i> Logout </a>
+                    <Link to={'/'} className="dashboard-nav-item"><i className="fas fa-sign-out-alt"></i> Logout </Link>
                 </nav>
             </div>
-            {/* Add buttons for open and close all dropdowns */}
             <div className="dashboard-controls">
                 <button id="open-all-dropdowns">Open All</button>
                 <button id="close-all-dropdowns">Close All</button>
