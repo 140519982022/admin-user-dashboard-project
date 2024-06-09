@@ -10,10 +10,11 @@ export default function UpdateProfile() {
     return (
         <>
             <div className='container-fluid'>
-                <Header />
                 <div className='dashboard-wrapper'>
                     <Sidebar />
                     <div className='main-content'>
+                        <Header />
+                        <div className="p-5">
                         <h1 className='fw-bold text-danger'>Update Profile</h1>
                         <div className='container'>
                             <div className='w-100 mx-auto p-5 m-5 shadow-lg bg-body rounded border'>
@@ -43,6 +44,7 @@ export default function UpdateProfile() {
 
                             </div>
                             <Footer />
+                        </div>
                         </div>
                     </div>
                 </div>

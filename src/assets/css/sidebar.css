@@ -459,7 +459,7 @@ h1, .h1 {
   
   .dashboard-wrapper {
     display: flex;
-    height: calc(100vh - 56px); /* Adjust height considering the navbar */
+    /* height: calc(100vh - 56px);  */
   }
   
   .dashboard {
@@ -514,7 +514,7 @@ h1, .h1 {
   
   .main-content {
     flex: 1;
-    padding: 20px;
+    /* padding: 20px; */
     overflow-y: auto;
     background: #f8f9fa;
   }

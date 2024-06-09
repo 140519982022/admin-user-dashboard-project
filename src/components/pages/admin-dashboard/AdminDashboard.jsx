@@ -10,10 +10,11 @@ export default function AdminDashboard() {
         <>
 
             <div className='container-fluid'>
-                <Header />
                 <div className='dashboard-wrapper'>
                     <Sidebar />
                     <div className='main-content'>
+                        <Header />
+                        <div className='p-5'>
                         <div className='d-flex justify-content-between py-3 w-75'>
                             <h4 className='text-capitalize text-dark fw-bolder'>
                                 Welcome To Admin Panel
@@ -84,13 +85,14 @@ export default function AdminDashboard() {
                                         </div>
                                     </div>
 
-                                    
+
                                 </div>
 
 
 
                             </div>
                             <Footer />
+                        </div>
                         </div>
                     </div>
                 </div>

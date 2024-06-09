@@ -47,8 +47,6 @@ export default function Login() {
                         <Link to={'/admin-registration'} className=''>Register Here</Link>
                     </div>
                 </form>
-
-
             </div>
             {/* <Footer />
                         </div> */}
