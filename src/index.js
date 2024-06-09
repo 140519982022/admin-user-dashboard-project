@@ -18,12 +18,17 @@ import ViewSlides from './components/pages/slides/ViewSlides';
 import AddTeam from './components/pages/team/AddTeam';
 import ViewTeam from './components/pages/team/ViewTeam';
 import ViewUser from './components/pages/users/ViewUser';
+import AdminDashboard from './components/pages/admin-dashboard/AdminDashboard';
 
 let allRouters = createBrowserRouter([
 
   {
     path: '/',
     element: <Login/>
+  },
+  {
+    path: '/dashboard',
+    element: <AdminDashboard/>
   },
 
   {

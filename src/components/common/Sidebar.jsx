@@ -75,9 +75,9 @@ export default function Sidebar() {
             <div className="dashboard-nav">
                 <header>
                     <a href="#!" className="menu-toggle"><i className="fas fa-bars"></i></a>
-                    <a href="#" className="brand-logo">
-                        <i className="fas fa-anchor"></i> <span>BRAND</span>
-                    </a>
+                    <Link to={'/dashboard'} className="brand-logo">
+                        <i className="fas fa-anchor"></i> <span>Dashboard</span>
+                    </Link>
                 </header>
                 <nav className="dashboard-nav-list">
                     <div className='dashboard-nav-dropdown'>

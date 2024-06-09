@@ -7,7 +7,7 @@ import { FiMenu } from "react-icons/fi";
 
 export default function Header() {
   return (
-    <Navbar collapseOnSelect expand="lg" className="bg-danger sticky z-3 sticky-top">
+    <Navbar collapseOnSelect expand="lg" className="bg-dark ">
       <Container>
         <Navbar.Brand href="#home" className='text-white fw-bold'>React-Bootstrap</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
