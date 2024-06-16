@@ -15,84 +15,85 @@ export default function AdminDashboard() {
                     <div className='main-content'>
                         <Header />
                         <div className='p-5'>
-                        <div className='d-flex justify-content-between py-3 w-75'>
-                            <h4 className='text-capitalize text-dark fw-bolder'>
-                                Welcome To Admin Panel
-                            </h4>
-                            <div class="d-flex" role="search">
-                                <input className="form-control me-2 position-relative" type="search" placeholder="       Search Mockups Logos.." aria-label="Search" />
-                                <CiSearch className='position-absolute m-1 fs-3' />
-                                <button class="btn btn-outline-success btn-primary text-white" type="submit">Search</button>
+                            <div className='d-flex justify-content-between py-3 w-75'>
+                                <h4 className='text-capitalize text-dark fw-bolder'>
+                                    Welcome To Admin Panel
+                                </h4>
+                                <div class=" mb-3 d-flex" role="search">
+                                    <span class="input-group-text" id="basic-addon1"><CiSearch className=' m-1 fs-3' /></span>
+                                    <input type="search" class="form-control" placeholder="Search Mockups Logos.." aria-label="Username" aria-describedby="basic-addon1"/>
+                                    <button class="btn ms-3 btn-primary text-white" type="submit">Search</button>
+                                </div>
+
                             </div>
-                        </div>
 
-                        <div className='container'>
-                            <div className='my-5'>
-                                <div className="row justify-content-around">
-                                    <div className="col-md-3">
-                                        <div className='bg-info text-white p-3 rounded-4 mb-4'>
-                                            <p>
-                                                Today's Booking
-                                            </p>
-                                            <p className='display-5 fw-semibold'>
-                                                4006
-                                            </p>
-                                            <p>
-                                                10.00% <span>(30 days)</span>
-                                            </p>
+                            <div className='container'>
+                                <div className='my-5'>
+                                    <div className="row justify-content-around">
+                                        <div className="col-md-3">
+                                            <div className='bg-info text-white p-3 rounded-4 mb-4'>
+                                                <p>
+                                                    Today's Booking
+                                                </p>
+                                                <p className='display-5 fw-semibold'>
+                                                    4006
+                                                </p>
+                                                <p>
+                                                    10.00% <span>(30 days)</span>
+                                                </p>
+                                            </div>
                                         </div>
+
+                                        <div className="col-md-3">
+                                            <div className='bg-primary text-white p-3 rounded-4 mb-4'>
+                                                <p>
+                                                    Today's Booking
+                                                </p>
+                                                <p className='display-5 fw-semibold'>
+                                                    4006
+                                                </p>
+                                                <p>
+                                                    10.00% <span>(30 days)</span>
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <div className="col-md-3">
+                                            <div className='bg-warning text-white p-3 rounded-4 mb-4'>
+                                                <p>
+                                                    Today's Booking
+                                                </p>
+                                                <p className='display-5 fw-semibold'>
+                                                    4006
+                                                </p>
+                                                <p>
+                                                    10.00% <span>(30 days)</span>
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <div className="col-md-3">
+                                            <div className='bg-danger text-white p-3 rounded-4 mb-4'>
+                                                <p>
+                                                    Today's Booking
+                                                </p>
+                                                <p className='display-5 fw-semibold'>
+                                                    4006
+                                                </p>
+                                                <p>
+                                                    10.00% <span>(30 days)</span>
+                                                </p>
+                                            </div>
+                                        </div>
+
+
                                     </div>
 
-                                    <div className="col-md-3">
-                                        <div className='bg-primary text-white p-3 rounded-4 mb-4'>
-                                            <p>
-                                                Today's Booking
-                                            </p>
-                                            <p className='display-5 fw-semibold'>
-                                                4006
-                                            </p>
-                                            <p>
-                                                10.00% <span>(30 days)</span>
-                                            </p>
-                                        </div>
-                                    </div>
-
-                                    <div className="col-md-3">
-                                        <div className='bg-warning text-white p-3 rounded-4 mb-4'>
-                                            <p>
-                                                Today's Booking
-                                            </p>
-                                            <p className='display-5 fw-semibold'>
-                                                4006
-                                            </p>
-                                            <p>
-                                                10.00% <span>(30 days)</span>
-                                            </p>
-                                        </div>
-                                    </div>
-
-                                    <div className="col-md-3">
-                                        <div className='bg-danger text-white p-3 rounded-4 mb-4'>
-                                            <p>
-                                                Today's Booking
-                                            </p>
-                                            <p className='display-5 fw-semibold'>
-                                                4006
-                                            </p>
-                                            <p>
-                                                10.00% <span>(30 days)</span>
-                                            </p>
-                                        </div>
-                                    </div>
 
 
                                 </div>
-
-
-
+                                <Footer />
                             </div>
-                            <Footer />
-                        </div>
                         </div>
                     </div>
                 </div>
