@@ -30,7 +30,7 @@ export default function Login() {
             <div className='w-50 mx-auto p-5 m-5 shadow-lg p-3 bg-body rounded border'>
                 <form>
                     <ToastContainer />
-                    <h1 className='fw-bold pb-5 text-danger'>Admin Login Here</h1>
+                    <h1 className='fw-bold pb-5 text-primary'>Admin Login Here</h1>
                     <div className="form-group">
                         <label for="exampleInputEmail1" className='fw-bold pb-2'>Email address</label>
                         <input type="email" className="form-control mb-3" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" />
