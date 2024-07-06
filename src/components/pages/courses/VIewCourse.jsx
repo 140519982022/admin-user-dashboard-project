@@ -12,7 +12,7 @@ export default function VIewCourse() {
     let getAllDetails = () => {
         axios.get(`http://localhost:4000/api/backend/categories/view`)
             .then((response) => {
-                console.log(response.data[0].data)
+                // console.log(response.data[0].data)
                 setAlluser(response.data[0].data)
             })
     }
@@ -22,7 +22,7 @@ export default function VIewCourse() {
     }, [])
 
 
-    console.log(allUser);
+    // console.log(allUser);
     return (
         <div className='container-fluid'>
             <div className='dashboard-wrapper'>
