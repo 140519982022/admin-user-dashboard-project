@@ -1,46 +1,63 @@
-import React, { useState } from 'react';
-import Header from '../../common/Header';
-import Sidebar from '../../common/Sidebar';
-import Footer from '../../common/Footer';
-import axios from 'axios';
+import React, { useState } from 'react'
+import Header from '../../common/Header'
+import Sidebar from '../../common/Sidebar'
+import Footer from '../../common/Footer'
+import axios, { toFormData } from 'axios'
 
 export default function AddCourse() {
+
     const [formData, setFormData] = useState({
+
         course_name: '',
         price: '',
         duration: '',
         description: '',
         images: null,
         status: ''
+
     });
 
     let formDataStore = (event) => {
+
+    //    let course_name: event.target.course_name;
+    //    let price: event.target.price;
+    //    let duration: event.target.duration;
+    //    let description: event.target.description;
+    //    let images: event.target.images;
+    //    let status: event.target.status;
+
         let inputName = event.target.name;
-        let inputValue = event.target.type === 'file' ? event.target.files[0] : event.target.value;
+        let inputValue = event.target.value;
+
+        // console.log(inputName);
+        // console.log(inputValue);
 
         let object = { ...formData };
+
         object[inputName] = inputValue;
+
         setFormData(object);
+
     }
 
-    let saveFormData = (event) => {
+
+    let saveFomeData = (event) => {
+        // alert("hihih");
+
         event.preventDefault();
-        const data = new FormData();
-        data.append('course_name', formData.course_name);
-        data.append('price', formData.price);
-        data.append('duration', formData.duration);
-        data.append('description', formData.description);
-        data.append('images', formData.images);
-        data.append('status', formData.status);
+        // console.log(formData);
 
-        axios.post(`http://localhost:4000/api/backend/categories/add`, data)
-            .then(response => {
-                console.log(response.data);
-            })
-            .catch(error => {
-                console.log('There was an error!', error);
-            });
+        axios.post(`http://localhost:4000/api/backend/categories/add`, toFormData(formData))
+        .then(response => {
+            console.log(response.data);
+          })
+          .catch(error => {
+            console.log('There was an error!', error);
+          });
+
     }
+
+// console.log(formData)
 
     return (
         <>
@@ -51,47 +68,59 @@ export default function AddCourse() {
                         <Header />
                         <div className='p-5'>
                             <h1 className='fw-bold text-danger'>Add course</h1>
+
                             <div className='container'>
-                                <div className='w-100 mx-auto m-3 shadow-lg p-5 bg-body rounded border'>
-                                    <form onSubmit={saveFormData}>
+                                {/* <div className=''> */}
+                                {/* <div className='container'> */}
+                                <div className='w-100 mx-auto  m-3 shadow-lg p-5 bg-body rounded border'>
+                                    <form onSubmit={saveFomeData}>
+                                        {/* <h1 className='fw-bold pb-5 text-danger'>Add course</h1> */}
                                         <div className="form-group">
-                                            <label className='fw-bold py-3'>Course Name</label>
-                                            <input type="text" name='course_name' className="form-control mb-3" placeholder="Enter course name" value={formData.course_name} onChange={formDataStore} />
+                                            <label for="exampleInputEmail1" className='fw-bold py-3'>Course Name</label>
+                                            <input type="text" name='course_name' className="form-control mb-3" aria-describedby="emailHelp" placeholder="Enter course name" value={formData.course_name} onChange={formDataStore} />
                                         </div>
                                         <div className="form-group">
-                                            <label className='fw-bold py-3'>Course Price</label>
-                                            <input type="text" name='price' className="form-control" placeholder="Enter course price" value={formData.price} onChange={formDataStore} />
+                                            <label for="exampleInputPassword1" className='fw-bold py-3'>Course Price</label>
+                                            <input type="text" name='price' className="form-control" placeholder="enter course price" value={formData.price} onChange={formDataStore}/>
                                         </div>
                                         <div className="form-group">
-                                            <label className='fw-bold py-3'>Course Duration</label>
-                                            <input type="text" name='duration' className="form-control" placeholder="Enter course duration" value={formData.duration} onChange={formDataStore} />
+                                            <label for="exampleInputPassword1" className='fw-bold py-3'>Course Duration</label>
+                                            <input type="text" name='duration' className="form-control" placeholder="enter course duration" value={formData.duration} onChange={formDataStore}/>
                                         </div>
                                         <div className="form-group">
-                                            <label className='fw-bold py-3'>Course Description</label>
-                                            <textarea name="description" className="form-control" rows={3} placeholder='Enter course description' value={formData.description} onChange={formDataStore}></textarea>
+                                            <label for="exampleInputPassword1" className='fw-bold py-3'>Course Description</label>
+                                            <textarea name="description" className="form-control" rows={3} placeholder='enter course desciption' value={formData.description} onChange={formDataStore}></textarea>
                                         </div>
                                         <div className="form-group">
-                                            <label className='fw-bold py-3'>Course Image</label>
-                                            <input type="file" name='images' className="form-control mb-3" onChange={formDataStore} />
+                                            <label for="exampleInputEmail1" className='fw-bold py-3'>Course Image</label>
+                                            <input type="file" name='images' className="form-control mb-3" aria-describedby="emailHelp" placeholder="select logo" value={formData.images} onChange={formDataStore} />
                                         </div>
                                         <div className="form-group pb-5">
-                                            <label className='fw-bold py-3'>Course Status</label> <br />
-                                            <input type="radio" name="status" value="active" onChange={formDataStore} /> &nbsp;&nbsp;&nbsp;
-                                            <label className='fw-bold py-2'>Active</label>&nbsp;&nbsp;&nbsp;
+                                            <label for="exampleInputEmail1" className='fw-bold py-3'>Course Status</label> <br />
+                                            <input type="radio" name="status" /> &nbsp;&nbsp;&nbsp;
+                                            <label for="active" className='fw-bold py-2' value={formData.status} onChange={formDataStore}>Active</label>&nbsp;&nbsp;&nbsp;
 
-                                            <input type="radio" name="status" value="deactive" onChange={formDataStore} />&nbsp;&nbsp;&nbsp;
-                                            <label className='fw-bold py-2'>Deactive</label>
+                                            <input type="radio" name="status" />&nbsp;&nbsp;&nbsp;
+                                            <label for="deactive" className='fw-bold py-2' value={formData.status} onChange={formDataStore}>Deactive</label>
+
                                         </div>
-                                        <button type="submit" className="btn btn-primary fw-bold">Submit</button>
+                                        <button type="submit" className="btn btn-primary fw-bold ">Submit</button>
                                         <button type="button" className="btn btn-warning fw-bold ms-5">Cancel</button>
                                     </form>
+
                                 </div>
+
+                                {/* </div>
+
+    </div> */}
                                 <Footer />
                             </div>
+
                         </div>
                     </div>
                 </div>
             </div>
+
         </>
-    );
+    )
 }
