@@ -1,63 +1,76 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from '../../common/Header'
 import Sidebar from '../../common/Sidebar'
 import Footer from '../../common/Footer'
-import axios, { toFormData } from 'axios'
+import axios from 'axios'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router-dom'
 
 export default function AddCourse() {
 
-    const [formData, setFormData] = useState({
-
-        course_name: '',
-        price: '',
-        duration: '',
-        description: '',
-        images: null,
-        status: ''
-
-    });
-
-    let formDataStore = (event) => {
-
-    //    let course_name: event.target.course_name;
-    //    let price: event.target.price;
-    //    let duration: event.target.duration;
-    //    let description: event.target.description;
-    //    let images: event.target.images;
-    //    let status: event.target.status;
-
-        let inputName = event.target.name;
-        let inputValue = event.target.value;
-
-        // console.log(inputName);
-        // console.log(inputValue);
-
-        let object = { ...formData };
-
-        object[inputName] = inputValue;
-
-        setFormData(object);
-
-    }
-
-
-    let saveFomeData = (event) => {
+    let [submitForm, setSubmitForm] = useState(false)
+    let navigator = useNavigate()
+    let saveFormeData = (event) => {
         // alert("hihih");
 
         event.preventDefault();
-        // console.log(formData);
 
-        axios.post(`http://localhost:4000/api/backend/categories/add`, toFormData(formData))
+        if(event.target.course_order.value == ''){
+            var order = 1;
+        }else{
+            var order = event.target.course_order.value;
+        }
+
+        if(event.target.course_status.value == ''){
+            var status = 1;
+        }else{
+            var status = event.target.course_status.value;
+        }
+
+        let formData = {
+            name : event.target.course_name.value,
+            price: event.target.course_price.value,
+            duration: event.target.course_duration.value,
+            order: order,
+            description: event.target.course_description.value,
+            image: event.target.course_name.value,
+            status: status,
+
+        }
+
+        console.log(formData)
+        axios.post(`http://localhost:8000/api/backend/courses/add`, formData)
         .then(response => {
-            console.log(response.data);
-          })
-          .catch(error => {
+            console.log(response)
+            if (response.data.status == true) {
+
+                setSubmitForm(true)
+                toast.success(response.data.message)
+                
+            }else{
+                // setSubmitForm(false)
+                toast.error(response.data.message)
+
+            }
+
+        })
+        .catch(error => {
             console.log('There was an error!', error);
-          });
+            toast.error("spmthing went wrong")
+
+        });
+
+
 
     }
 
-// console.log(formData)
+    useEffect(()=>{
+        if (submitForm == true) {
+            navigator('/view-course')
+            
+        }
+    },[submitForm])
 
     return (
         <>
@@ -68,40 +81,46 @@ export default function AddCourse() {
                         <Header />
                         <div className='p-5'>
                             <h1 className='fw-bold text-danger'>Add course</h1>
-
                             <div className='container'>
-                                {/* <div className=''> */}
-                                {/* <div className='container'> */}
                                 <div className='w-100 mx-auto  m-3 shadow-lg p-5 bg-body rounded border'>
-                                    <form onSubmit={saveFomeData}>
-                                        {/* <h1 className='fw-bold pb-5 text-danger'>Add course</h1> */}
+                                <ToastContainer />
+                                    <form onSubmit={saveFormeData}>
                                         <div className="form-group">
-                                            <label for="exampleInputEmail1" className='fw-bold py-3'>Course Name</label>
-                                            <input type="text" name='course_name' className="form-control mb-3" aria-describedby="emailHelp" placeholder="Enter course name" value={formData.course_name} onChange={formDataStore} />
+                                            <label className='fw-bold py-3'>Course Name</label>
+                                            <input type="text" name='course_name' className="form-control mb-3" placeholder="Enter course name"/>
                                         </div>
                                         <div className="form-group">
-                                            <label for="exampleInputPassword1" className='fw-bold py-3'>Course Price</label>
-                                            <input type="text" name='price' className="form-control" placeholder="enter course price" value={formData.price} onChange={formDataStore}/>
+                                            <label className='fw-bold py-3'>Course Price</label>
+                                            <input type="text" name='course_price' className="form-control" placeholder="enter course price"/>
                                         </div>
                                         <div className="form-group">
-                                            <label for="exampleInputPassword1" className='fw-bold py-3'>Course Duration</label>
-                                            <input type="text" name='duration' className="form-control" placeholder="enter course duration" value={formData.duration} onChange={formDataStore}/>
+                                            <label className='fw-bold py-3'>Course Duration</label>
+                                            <input type="text" name='course_duration' className="form-control" placeholder="enter course duration"/>
                                         </div>
                                         <div className="form-group">
-                                            <label for="exampleInputPassword1" className='fw-bold py-3'>Course Description</label>
-                                            <textarea name="description" className="form-control" rows={3} placeholder='enter course desciption' value={formData.description} onChange={formDataStore}></textarea>
+                                            <label htmlFor="order" className='fw-bold py-3'>Course Order</label>
+                                            <input type="text"
+                                                name="course_order"
+                                                className="form-control"
+                                                placeholder="Enter course order"
+                                            />
                                         </div>
+                                        <div className="form-group">
+                                            <label className='fw-bold py-3'>Course Description</label>
+                                            <textarea name="course_description" className="form-control" rows={3} placeholder='enter course desciption'></textarea>
+                                        </div>
+                                       
                                         <div className="form-group">
                                             <label for="exampleInputEmail1" className='fw-bold py-3'>Course Image</label>
-                                            <input type="file" name='images' className="form-control mb-3" aria-describedby="emailHelp" placeholder="select logo" value={formData.images} onChange={formDataStore} />
+                                            <input type="file" name='course_images' className="form-control mb-3" placeholder="select logo"/>
                                         </div>
                                         <div className="form-group pb-5">
                                             <label for="exampleInputEmail1" className='fw-bold py-3'>Course Status</label> <br />
-                                            <input type="radio" name="status" /> &nbsp;&nbsp;&nbsp;
-                                            <label for="active" className='fw-bold py-2' value={formData.status} onChange={formDataStore}>Active</label>&nbsp;&nbsp;&nbsp;
+                                            <input type="radio" name="course_status" value="1"/> &nbsp;&nbsp;&nbsp;
+                                            <label for="active" className='fw-bold py-2' >Active</label>&nbsp;&nbsp;&nbsp;
 
-                                            <input type="radio" name="status" />&nbsp;&nbsp;&nbsp;
-                                            <label for="deactive" className='fw-bold py-2' value={formData.status} onChange={formDataStore}>Deactive</label>
+                                            <input type="radio" name="course_status"  value="0"/>&nbsp;&nbsp;&nbsp;
+                                            <label for="deactive" className='fw-bold py-2'>Deactive</label>
 
                                         </div>
                                         <button type="submit" className="btn btn-primary fw-bold ">Submit</button>
@@ -109,10 +128,6 @@ export default function AddCourse() {
                                     </form>
 
                                 </div>
-
-                                {/* </div>
-
-    </div> */}
                                 <Footer />
                             </div>
 
