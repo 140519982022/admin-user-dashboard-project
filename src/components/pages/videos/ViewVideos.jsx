@@ -1,10 +1,32 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { CiSearch } from "react-icons/ci";
 import Header from '../../common/Header';
 import Sidebar from '../../common/Sidebar';
 import Footer from '../../common/Footer';
+import axios from 'axios';
 
 export default function ViewVideos() {
+    let [allVideo, setAllVideo] = useState([])
+
+    let getAllDetails = () => {
+        axios.post(`http://localhost:8000/api/backend/videos/view`)
+            .then((response) => {
+                console.log(response.data.data)
+                setAllVideo(response.data.data) // Set only the data array
+            })
+            .catch((error) => {
+                console.error("There was an error fetching the data!", error);
+            });
+    }
+
+    useEffect(() => {
+        getAllDetails()
+    }, [])
+
+    console.log("all Video");
+    console.log(allVideo);
+
+
     return (
         <>
             <div className='container-fluid'>
@@ -38,7 +60,6 @@ export default function ViewVideos() {
                                                 <th scope="col">S.no</th>
                                                 <th scope="col">Course Category</th>
                                                 <th scope="col"><button className='bg-danger text-white me-2'>Delete</button>
-                                                    <input type="checkbox" name="" />
                                                 </th>
                                                 <th scope="col">Video Topic</th>
                                                 <th scope="col">Video Link</th>
@@ -48,18 +69,43 @@ export default function ViewVideos() {
                                         </thead>
                                         <tbody>
                                             {/* <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                            </tr> */}
-                                            <tr>
+                                                <th scope="row">1</th>
+                                                <td>Mark</td>
+                                                <td>Otto</td>
+                                                <td>@mdo</td>
+                                                <td>Mark</td>
+                                                <td>Otto</td>
+                                                <td>@mdo</td>
+                                            </tr> */}
+                                            {/* <tr>
                                                 <th colSpan={7} className='text-center'>Data not found in API</th>
 
-                                            </tr>
+                                            </tr> */}
+
+
+                                            {allVideo.length > 0 ? (
+                                                allVideo.map((video, index) => (
+                                                    <tr key={video._id}>
+                                                        <th scope="row">{index + 1}</th>
+                                                        <td>{video.category}</td>
+                                                        <th scope="col">
+                                                    <input type="checkbox" name="" />
+                                                </th>
+                                                        <td>{video.topic}</td>
+                                                        <td>{video.link}</td>
+                                                        <td>{video.status == true ? 'Active' : 'Deactive'}</td>
+
+                                                        <td>
+                                                            {/* <button className='bg-danger text-white me-2 border border-0'>Delete</button> */}
+                                                            <button className='bg-success text-white border border-0 px-3'>Edit</button>
+                                                        </td>
+                                                    </tr>
+                                                ))
+                                            ) : (
+                                                <tr>
+                                                    <th colSpan={6} className='text-center'>Data not found in API</th>
+                                                </tr>
+                                            )}
 
                                         </tbody>
                                     </table>
