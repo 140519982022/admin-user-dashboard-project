@@ -10,22 +10,20 @@ export default function ViewVideos() {
 
     let getAllDetails = () => {
         axios.post(`http://localhost:8000/api/backend/videos/view`)
-            .then((response) => {
-                console.log(response.data.data)
-                setAllVideo(response.data.data) // Set only the data array
-            })
-            .catch((error) => {
-                console.error("There was an error fetching the data!", error);
-            });
+        .then((response) => {
+            console.log(response.data.data)
+            setAllVideo(response.data.data) // Set only the data array
+        })
+        .catch((error) => {
+            console.error("There was an error fetching the data!", error);
+        });
     }
 
     useEffect(() => {
         getAllDetails()
     }, [])
 
-    console.log("all Video");
-    console.log(allVideo);
-
+    // console.log(allVideo);
 
     return (
         <>
@@ -40,10 +38,8 @@ export default function ViewVideos() {
                                     Welcome To View Video's Table
                                 </h5>
                                 <div class="d-flex" role="search">
-                                    <input className="form-control me-2 position-relative" type="search" placeholder="       Search Mockups Logos.." aria-label="Search" />
+                                    <input className="form-control me-2 position-relative" type="search" placeholder="Search Mockups Logos.." aria-label="Search" />
                                     <CiSearch className='position-absolute m-1 fs-3' />
-
-                                    {/* <button class="btn btn-outline-success" type="submit">Search</button> */}
                                 </div>
                             </div>
 
@@ -51,9 +47,6 @@ export default function ViewVideos() {
 
                             <div className='container'>
                                 <div className='w-70 mx-auto p-5 m-5 shadow-lg p-3 bg-body rounded border'>
-
-
-
                                     <table class="table mt-5 table-bordered border-dark">
                                         <thead>
                                             <tr>
@@ -68,32 +61,25 @@ export default function ViewVideos() {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {/* <tr>
-                                                <th scope="row">1</th>
-                                                <td>Mark</td>
-                                                <td>Otto</td>
-                                                <td>@mdo</td>
-                                                <td>Mark</td>
-                                                <td>Otto</td>
-                                                <td>@mdo</td>
-                                            </tr> */}
-                                            {/* <tr>
-                                                <th colSpan={7} className='text-center'>Data not found in API</th>
-
-                                            </tr> */}
-
-
                                             {allVideo.length > 0 ? (
                                                 allVideo.map((video, index) => (
                                                     <tr key={video._id}>
                                                         <th scope="row">{index + 1}</th>
                                                         <td>{video.category}</td>
                                                         <th scope="col">
-                                                    <input type="checkbox" name="" />
-                                                </th>
+                                                            <input type="checkbox" name="" />
+                                                        </th>
                                                         <td>{video.topic}</td>
                                                         <td>{video.link}</td>
-                                                        <td>{video.status == true ? 'Active' : 'Deactive'}</td>
+                                                        <td>
+                                                            <span
+                                                                className={`badge ${video.status === true ? 'text-bg-warning' : 'text-bg-danger'
+                                                                    } text-white`}
+                                                            >
+                                                                {video.status === true ? 'Active' : 'Deactive'}
+                                                            </span>
+
+                                                        </td>
 
                                                         <td>
                                                             {/* <button className='bg-danger text-white me-2 border border-0'>Delete</button> */}

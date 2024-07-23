@@ -10,22 +10,20 @@ export default function AddVideos() {
     let [submitForm, setSubmitForm] = useState(false)
     let navigator = useNavigate()
     let saveFormeData = (event) => {
-        alert("hihih");
-
+        // alert("hihih");
         event.preventDefault();
 
-        if(event.target.video_status.value == ''){
+        if (event.target.video_status.value == '') {
             var status = 1;
-        }else{
+        } else {
             var status = event.target.video_status.value;
         }
 
         let formData = {
-            category : event.target.video_category.value,
+            category: event.target.video_category.value,
             topic: event.target.video_topic.value,
             link: event.target.video_link.value,
             status: status,
-
         }
 
         // console.log(formData)
@@ -33,33 +31,26 @@ export default function AddVideos() {
         .then(response => {
             console.log(response)
             if (response.data.status == true) {
-
                 setSubmitForm(true)
                 toast.success(response.data.message)
-                
-            }else{
+
+            } else {
                 // setSubmitForm(false)
                 toast.error(response.data.message)
-
             }
-
         })
         .catch(error => {
             console.log('There was an error!', error);
             toast.error("spmthing went wrong")
 
         });
-
-
-
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         if (submitForm == true) {
             navigator('/view-videos')
-            
         }
-    },[submitForm])
+    }, [submitForm])
 
     return (
         <>
@@ -85,21 +76,16 @@ export default function AddVideos() {
                                             <label className='fw-bold py-3'>Video Link</label>
                                             <input type="text" name='video_link' className="form-control" placeholder="enter video link" />
                                         </div>
-
                                         <div className="form-group pb-5">
                                             <label className='fw-bold py-3'>Video Status</label> <br />
                                             <input type="radio" name="video_status" value={1} /> &nbsp;&nbsp;&nbsp;
                                             <label for="active" className='fw-bold py-2'>Active</label>&nbsp;&nbsp;&nbsp;
-
                                             <input type="radio" name="video_status" value={0} />&nbsp;&nbsp;&nbsp;
                                             <label for="deactive" className='fw-bold py-2'>Deactive</label>
-
                                         </div>
                                         <button type="submit" className="btn btn-primary fw-bold ">Submit</button>
                                         <button type="button" className="btn btn-warning fw-bold ms-5">Cancel</button>
-
                                     </form>
-
                                 </div>
                                 <Footer />
                             </div>
@@ -107,8 +93,6 @@ export default function AddVideos() {
                     </div>
                 </div>
             </div>
-
-
         </>
     )
 }
