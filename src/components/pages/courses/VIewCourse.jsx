@@ -13,13 +13,19 @@ export default function ViewCourse() {
 
     let getAllDetails = () => {
         axios.post(`http://localhost:8000/api/backend/courses/view`)
-            .then((response) => {
-                console.log(response.data.data)
+        .then((response) => {
+            if (response.data.data == true) {
+                // console.log(response.data.data)
                 setAlluser(response.data.data) // Set only the data array
-            })
-            .catch((error) => {
-                console.error("There was an error fetching the data!", error);
-            });
+            }else{
+                setAlluser([]) 
+
+            }
+            
+        })
+        .catch((error) => {
+            console.error("There was an error during fetch the data!");
+        });
     }
 
     useEffect(() => {
@@ -42,9 +48,14 @@ export default function ViewCourse() {
                             <h5 className='text-capitalize text-dark fw-bolder'>
                                 Welcome To View Courses Table
                             </h5>
-                            <div class="d-flex" role="search">
+                            {/* <div class="d-flex" role="search">
                                 <input className="form-control me-2 position-relative" type="search" placeholder="       Search Mockups Logos.." aria-label="Search" />
                                 <CiSearch className='position-absolute m-1 fs-3' />
+                            </div> */}
+
+                            <div class=" mb-3 d-flex" role="search">
+                                <span class="input-group-text" id="basic-addon1"><CiSearch className=' m-1 fs-3' /></span>
+                                <input type="search" class="form-control" placeholder="Search Mockups Logos.." aria-label="Username" aria-describedby="basic-addon1" />
                             </div>
                         </div>
 
@@ -56,9 +67,11 @@ export default function ViewCourse() {
                                             <tr>
                                                 <th scope="col">S.no</th>
                                                 <th scope="col">Course</th>
-                                                <th scope="col">Description</th>
                                                 <th scope="col">Price</th>
                                                 <th scope="col">Duration</th>
+                                                <th scope="col">Image</th>
+                                                <th scope="col">Status</th>
+
                                                 <th scope="col">Action</th>
                                             </tr>
                                         </thead>
@@ -68,12 +81,22 @@ export default function ViewCourse() {
                                                     <tr key={course._id}>
                                                         <th scope="row">{index + 1}</th>
                                                         <td>{course.name}</td>
-                                                        <td>{course.description}</td>
                                                         <td>{course.price}</td>
                                                         <td>{course.duration}</td>
+                                                        <td>{course.image}</td>
                                                         <td>
-                                                            <button className='bg-danger text-white me-2 border border-0'>Delete</button>
-                                                            <button className='bg-success text-white border border-0 px-3'>Edit</button>
+
+                                                        <span
+                                                                className={`badge ${course.status === true ? 'text-bg-success px-3' : 'text-bg-danger'
+                                                                    } text-white`}
+                                                            >
+                                                                {course.status === true ? 'Active' : 'Deactive'}
+                                                            </span>
+                                                        </td>
+
+                                                        <td>
+                                                            <button className='bg-success text-white me-2 border border-0 px-3'>Edit</button>
+                                                            <button className='bg-danger text-white border border-0'>Delete</button>
                                                         </td>
                                                     </tr>
                                                 ))

@@ -37,10 +37,14 @@ export default function ViewVideos() {
                                 <h5 className='text-capitalize text-dark fw-bolder'>
                                     Welcome To View Video's Table
                                 </h5>
-                                <div class="d-flex" role="search">
+                                {/* <div class="d-flex" role="search">
                                     <input className="form-control me-2 position-relative" type="search" placeholder="Search Mockups Logos.." aria-label="Search" />
                                     <CiSearch className='position-absolute m-1 fs-3' />
-                                </div>
+                                </div> */}
+                                <div class=" mb-3 d-flex" role="search">
+                                <span class="input-group-text" id="basic-addon1"><CiSearch className=' m-1 fs-3' /></span>
+                                <input type="search" class="form-control" placeholder="Search Mockups Logos.." aria-label="Username" aria-describedby="basic-addon1" />
+                            </div>
                             </div>
 
                             <button type="button" class="btn btn-outline-dark my-3 rounded-pill">All Courses Videos</button>
