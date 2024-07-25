@@ -11,10 +11,13 @@ import 'react-toastify/dist/ReactToastify.css';
 export default function ViewCourse() {
     let [allUser, setAlluser] = useState([])
 
+    // let [changeStatusValue, setChangeStatusValue] = useState(false)
+
+
     let getAllDetails = () => {
         axios.post(`http://localhost:8000/api/backend/courses/view`)
         .then((response) => {
-            if (response.data.data == true) {
+            if (response.data.status == true) {
                 // console.log(response.data.data)
                 setAlluser(response.data.data) // Set only the data array
             }else{
