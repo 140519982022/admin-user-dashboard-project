@@ -11,8 +11,7 @@ import 'react-toastify/dist/ReactToastify.css';
 export default function ViewCourse() {
     let [allUser, setAlluser] = useState([])
 
-    // let [changeStatusValue, setChangeStatusValue] = useState(false)
-
+    let [changeStatusValue, setChangeStatusValue] = useState(false)
 
     let getAllDetails = () => {
         axios.post(`http://localhost:8000/api/backend/courses/view`)
@@ -33,7 +32,35 @@ export default function ViewCourse() {
 
     useEffect(() => {
         getAllDetails()
-    }, [])
+    }, [changeStatusValue])
+
+    let changeStatus = (id,status)=>{
+
+        const data = {
+            id:id,
+            status: !status
+        }
+
+        axios.put('http://localhost:8000/api/backend/courses/change-status',data).then(
+            (result)=>{
+                if (result.data.status == true) {
+
+                    toast.success(result.data.message)
+                    setChangeStatusValue(!changeStatusValue)
+                    
+                }else{
+                    toast.error(result.data.message)
+
+                }
+
+        }).catch(
+            ()=>{
+                toast.error('somthing went wrong')
+
+
+            }
+        )
+    }
 
     console.log("all user");
     console.log(allUser);
@@ -91,7 +118,7 @@ export default function ViewCourse() {
 
                                                         <span
                                                                 className={`badge ${course.status === true ? 'text-bg-success px-3' : 'text-bg-danger'
-                                                                    } text-white`}
+                                                                    } text-white`} onClick={ ()=>changeStatus(course._id,course.status)}
                                                             >
                                                                 {course.status === true ? 'Active' : 'Deactive'}
                                                             </span>
