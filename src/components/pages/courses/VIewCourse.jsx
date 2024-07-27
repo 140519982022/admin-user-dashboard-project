@@ -13,6 +13,9 @@ export default function ViewCourse() {
 
     let [changeStatusValue, setChangeStatusValue] = useState(false)
 
+    let [deleteIds, setDeleteIds] = useState([])
+
+
     let getAllDetails = () => {
         axios.post(`http://localhost:8000/api/backend/courses/view`)
         .then((response) => {
@@ -26,13 +29,10 @@ export default function ViewCourse() {
             
         })
         .catch((error) => {
-            console.error("There was an error during fetch the data!");
+            toast.error('somthing went wrong')
+            // console.error("There was an error during fetch the data!");
         });
     }
-
-    useEffect(() => {
-        getAllDetails()
-    }, [changeStatusValue])
 
     let changeStatus = (id,status)=>{
 
@@ -62,8 +62,78 @@ export default function ViewCourse() {
         )
     }
 
-    console.log("all user");
-    console.log(allUser);
+    let selectMultiple = (id)=>{
+
+        let updatedIdArr = [...deleteIds]
+
+        if (updatedIdArr.includes(id)) {
+
+            updatedIdArr = updatedIdArr.filter((course_id)=>{
+                return course_id != id;
+            })
+
+            
+        }else{
+            updatedIdArr.push(id)
+        }
+
+        setDeleteIds(updatedIdArr)
+    }
+    
+    let finalSoftDelete = ()=>{
+        // alert("hi")
+        let data = {
+            ids : deleteIds
+        }
+
+        // console.log(data)
+        axios.post('http://localhost:8000/api/backend/courses/multiple-delete', data).then(
+            (result)=>{
+                if (result.data.status == true) {
+
+                    toast.success(result.data.message)
+                    axios.post(`http://localhost:8000/api/backend/courses/view`)
+                    .then((response) => {
+                        if (response.data.status == true) {
+                            // console.log(response.data.data)
+                            setAlluser(response.data.data) // Set only the data array
+                        }else{
+                            setAlluser([]) 
+
+                        }
+                        
+                    })
+                    .catch((error) => {
+                        toast.error('somthing went wrong')
+                        // console.error("There was an error during fetch the data!");
+                    });
+                    // setChangeStatusValue(!changeStatusValue)
+                    
+                }else{
+                    toast.error(result.data.message)
+
+                }
+
+        }).catch(
+            ()=>{
+                toast.error('somthing went wrong')
+
+
+            }
+        )
+
+    }
+
+
+    useEffect(() => {
+        getAllDetails()
+    }, [changeStatusValue])
+    
+    // console.log(deleteIds)
+
+
+    // console.log("all user");
+    // console.log(allUser);
 
     return (
         <div className='container-fluid'>
@@ -87,7 +157,9 @@ export default function ViewCourse() {
                                 <span class="input-group-text" id="basic-addon1"><CiSearch className=' m-1 fs-3' /></span>
                                 <input type="search" class="form-control" placeholder="Search Mockups Logos.." aria-label="Username" aria-describedby="basic-addon1" />
                             </div>
+
                         </div>
+                            {/* <button className='bg-danger text-white border border-0'>Delete</button> */}
 
                         <div className='container'>
                             <div className='container'>
@@ -101,6 +173,10 @@ export default function ViewCourse() {
                                                 <th scope="col">Duration</th>
                                                 <th scope="col">Image</th>
                                                 <th scope="col">Status</th>
+                                                <th scope="col">
+                                                    <button type="button" class="btn btn-danger" onClick={()=>finalSoftDelete()}>Delete</button>
+
+                                                </th>
 
                                                 <th scope="col">Action</th>
                                             </tr>
@@ -114,6 +190,7 @@ export default function ViewCourse() {
                                                         <td>{course.price}</td>
                                                         <td>{course.duration}</td>
                                                         <td>{course.image}</td>
+                                                        
                                                         <td>
 
                                                         <span
@@ -123,10 +200,12 @@ export default function ViewCourse() {
                                                                 {course.status === true ? 'Active' : 'Deactive'}
                                                             </span>
                                                         </td>
+                                                        <td>
+                                                            <input type="checkbox" onClick={()=>selectMultiple(course._id)}/>
+                                                        </td>
 
                                                         <td>
                                                             <button className='bg-success text-white me-2 border border-0 px-3'>Edit</button>
-                                                            <button className='bg-danger text-white border border-0'>Delete</button>
                                                         </td>
                                                     </tr>
                                                 ))
