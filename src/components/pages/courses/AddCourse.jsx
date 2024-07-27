@@ -5,12 +5,51 @@ import Footer from '../../common/Footer'
 import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 export default function AddCourse() {
 
     let [submitForm, setSubmitForm] = useState(false)
     let navigator = useNavigate()
+    let params = useParams();
+    let[input,setInput] = useState({
+        course_name : "",
+        course_image : "",
+        course_price : "",
+        course_duration : "",
+        course_description : "",
+        course_status : "",
+        course_order : ""
+    })
+
+    useEffect(()=>{
+        if(params.course_id != undefined){
+            axios.post('http://localhost:8000/api/backend/courses/detail/'+params.course_id).then((result)=>{
+                setInput({
+                    course_name : result.data.data.name,
+                    course_image : result.data.data.image,
+                    course_price : result.data.data.price,
+                    course_duration : result.data.data.duration,
+                    course_description : result.data.data.description,
+                    course_status : result.data.data.status,
+                    course_order : result.data.data.order
+                })
+            }).catch((error)=>{
+                toast.error('somthing went wrong')
+            })
+
+        }
+    },[]);
+
+    let inputHandeler = (event) => {
+        
+        let data = {...input}
+
+        data[event.target.name] = event.target.value
+
+        setInput(data)
+    }
+
     let saveFormeData = (event) => {
         // alert("hihih");
 
@@ -23,8 +62,10 @@ export default function AddCourse() {
         }
 
         if(event.target.course_status.value == ''){
+            // console.log("blank status")
             var status = 1;
         }else{
+            // console.log("somthing in status")
             var status = event.target.course_status.value;
         }
 
@@ -39,27 +80,62 @@ export default function AddCourse() {
 
         }
 
-        console.log(formData)
-        axios.post(`http://localhost:8000/api/backend/courses/add`, formData)
-        .then(response => {
-            console.log(response)
-            if (response.data.status == true) {
+        // console.log(formData)
 
-                setSubmitForm(true)
-                toast.success(response.data.message)
-                
-            }else{
-                // setSubmitForm(false)
-                toast.error(response.data.message)
+        if (params.course_id == undefined) {
+            // console.log("undefined id 111111111111")
+            axios.post(`http://localhost:8000/api/backend/courses/add`, formData)
+            .then(result => {
+                console.log(result)
+                if (result.data.status == true) {
 
-            }
+                    setSubmitForm(true)
+                    toast.success(result.data.message)
+                    
+                }else{
+                    // setSubmitForm(false)
+                    toast.error(result.data.message)
 
-        })
-        .catch(error => {
-            console.log('There was an error!', error);
-            toast.error("spmthing went wrong")
+                }
 
-        });
+            })
+            .catch(error => {
+                console.log('There was an error!', error);
+                toast.error("spmthing went wrong")
+
+            });
+        }else{
+            // console.log("defined id 2222222222222")
+
+// console.log(params.course_id)
+            formData.id = params.course_id
+
+            // console.log(formData)
+
+            axios.put('http://localhost:8000/api/backend/courses/update', formData)
+            .then(result => {
+                // console.log(result)
+                if (result.data.status == true) {
+
+                    toast.success(result.data.message)
+                    setSubmitForm(true)
+                    
+                }else{
+                    // setSubmitForm(false)
+                    toast.error(result.data.message)
+
+                }
+
+            })
+            .catch(error => {
+                // console.log('There was an error!', error);
+                toast.error("spmthing went wrong")
+
+            });
+
+        }
+
+        
 
 
 
@@ -87,43 +163,43 @@ export default function AddCourse() {
                                     <form onSubmit={saveFormeData}>
                                         <div className="form-group">
                                             <label className='fw-bold py-3'>Course Name</label>
-                                            <input type="text" name='course_name' className="form-control mb-3" placeholder="Enter course name"/>
+                                            <input type="text" name='course_name' className="form-control mb-3" placeholder="Enter course name" onChange={inputHandeler} value={input.course_name}/>
                                         </div>
                                         <div className="form-group">
                                             <label className='fw-bold py-3'>Course Price</label>
-                                            <input type="text" name='course_price' className="form-control" placeholder="enter course price"/>
+                                            <input type="text" name='course_price' className="form-control" placeholder="enter course price" onChange={inputHandeler} value={input.course_price}/>
                                         </div>
                                         <div className="form-group">
                                             <label className='fw-bold py-3'>Course Duration</label>
-                                            <input type="text" name='course_duration' className="form-control" placeholder="enter course duration"/>
+                                            <input type="text" name='course_duration' className="form-control" placeholder="enter course duration" onChange={inputHandeler} value={input.course_duration}/>
                                         </div>
                                         <div className="form-group">
                                             <label htmlFor="order" className='fw-bold py-3'>Course Order</label>
                                             <input type="text"
                                                 name="course_order"
                                                 className="form-control"
-                                                placeholder="Enter course order"
+                                                placeholder="Enter course order" onChange={inputHandeler} value={input.course_order}
                                             />
                                         </div>
                                         <div className="form-group">
                                             <label className='fw-bold py-3'>Course Description</label>
-                                            <textarea name="course_description" className="form-control" rows={3} placeholder='enter course desciption'></textarea>
+                                            <textarea name="course_description" className="form-control" rows={3} placeholder='enter course desciption' onChange={inputHandeler} value={input.course_description}></textarea>
                                         </div>
                                        
                                         <div className="form-group">
                                             <label for="exampleInputEmail1" className='fw-bold py-3'>Course Image</label>
-                                            <input type="file" name='course_images' className="form-control mb-3" placeholder="select logo"/>
+                                            <input type="file" name='course_images' className="form-control mb-3" placeholder="select logo" onChange={inputHandeler}/>
                                         </div>
                                         <div className="form-group pb-5">
                                             <label for="exampleInputEmail1" className='fw-bold py-3'>Course Status</label> <br />
-                                            <input type="radio" name="course_status" value="1"/> &nbsp;&nbsp;&nbsp;
+                                            <input type="radio" name="course_status" value={1} onChange={inputHandeler} checked={(input.course_status == 1 ? 'checked' : '')}/> &nbsp;&nbsp;&nbsp;
                                             <label for="active" className='fw-bold py-2' >Active</label>&nbsp;&nbsp;&nbsp;
 
-                                            <input type="radio" name="course_status"  value="0"/>&nbsp;&nbsp;&nbsp;
+                                            <input type="radio" name="course_status" value={0} onChange={inputHandeler} checked={(input.course_status == 0 ? 'checked' : '')}/>&nbsp;&nbsp;&nbsp;
                                             <label for="deactive" className='fw-bold py-2'>Deactive</label>
 
                                         </div>
-                                        <button type="submit" className="btn btn-primary fw-bold ">Submit</button>
+                                        <input type="submit" className="btn btn-primary fw-bold " value={(params.course_id == undefined) ? 'Submit' : 'Update'}/>
                                         <button type="button" className="btn btn-warning fw-bold ms-5">Cancel</button>
                                     </form>
 

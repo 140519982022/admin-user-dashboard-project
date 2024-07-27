@@ -47,7 +47,7 @@ let allRouters = createBrowserRouter([
   },
 
   {
-    path: '/add-course',
+    path: '/add-course/:course_id?',
     element: <AddCourse/>
   },
 

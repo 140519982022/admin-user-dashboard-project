@@ -6,6 +6,7 @@ import { CiSearch } from "react-icons/ci";
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Link } from 'react-router-dom';
 
 
 export default function ViewCourse() {
@@ -205,7 +206,9 @@ export default function ViewCourse() {
                                                         </td>
 
                                                         <td>
+                                                            <Link to={`/add-course/${course._id}`}>
                                                             <button className='bg-success text-white me-2 border border-0 px-3'>Edit</button>
+                                                            </Link>
                                                         </td>
                                                     </tr>
                                                 ))
