@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Header from '../../common/Header'
 import Sidebar from '../../common/Sidebar'
 import Footer from '../../common/Footer'
@@ -6,6 +6,7 @@ import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate, useParams } from 'react-router-dom'
+import { MainContext } from '../../contextFile/ContextProvider'
 
 export default function AddCourse() {
 
@@ -22,7 +23,10 @@ export default function AddCourse() {
         course_order : ""
     })
 
+    let {formStatus,setFormStatus} = useContext(MainContext)
+
     useEffect(()=>{
+        console.log(formStatus)
         if(params.course_id != undefined){
             axios.post('http://localhost:8000/api/backend/courses/detail/'+params.course_id).then((result)=>{
                 setInput({
@@ -90,7 +94,13 @@ export default function AddCourse() {
                 if (result.data.status == true) {
 
                     setSubmitForm(true)
-                    toast.success(result.data.message)
+
+                    setFormStatus(
+                        {
+                            status : true,
+                            message : result.data.message
+                        }
+                    )
                     
                 }else{
                     // setSubmitForm(false)
@@ -117,8 +127,13 @@ export default function AddCourse() {
                 // console.log(result)
                 if (result.data.status == true) {
 
-                    toast.success(result.data.message)
                     setSubmitForm(true)
+                    setFormStatus(
+                        {
+                            status : true,
+                            message : result.data.message
+                        }
+                    )
                     
                 }else{
                     // setSubmitForm(false)
@@ -143,7 +158,7 @@ export default function AddCourse() {
 
     useEffect(()=>{
         if (submitForm == true) {
-            navigator('/view-course')
+            navigator('/view-course') 
             
         }
     },[submitForm])

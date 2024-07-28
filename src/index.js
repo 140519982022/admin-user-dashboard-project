@@ -5,7 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Login from './components/pages/Login';
-import { MainContext } from './components/contextFile/contextFile'
+import ContextProvider, { MainContext } from './components/contextFile/ContextProvider'
 import Registration from './components/pages/Registration'
 import ChangePassword from './components/pages/change-password/ChangePassword'
 import UpdateProfile from './components/pages/update-profile/UpdateProfile';
@@ -91,9 +91,10 @@ let allRouters = createBrowserRouter([
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   // <React.StrictMode>
-    <RouterProvider router={allRouters}>
-      <MainContext />
-    </RouterProvider>
+    <ContextProvider>
+      <RouterProvider router={allRouters}/>
+      {/* <App/> */}
+    </ContextProvider>
   // </React.StrictMode>
 );
 

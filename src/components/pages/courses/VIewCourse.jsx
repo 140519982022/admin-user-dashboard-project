@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Sidebar from '../../common/Sidebar'
 import Header from '../../common/Header'
 import Footer from '../../common/Footer'
@@ -7,6 +7,7 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Link } from 'react-router-dom';
+import { MainContext } from '../../contextFile/ContextProvider';
 
 
 export default function ViewCourse() {
@@ -16,6 +17,19 @@ export default function ViewCourse() {
 
     let [deleteIds, setDeleteIds] = useState([])
 
+    let {formStatus,setFormStatus} = useContext(MainContext)
+
+    console.log("view course page")
+
+    console.log(formStatus)
+
+    if (changeStatusValue == false) {
+        if (formStatus.status == true ) {
+            
+            toast.success(formStatus.message)
+        }
+        
+    }
 
     let getAllDetails = () => {
         axios.post(`http://localhost:8000/api/backend/courses/view`)
