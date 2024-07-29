@@ -216,7 +216,7 @@ export default function ViewCourse() {
                                                 <th scope="col">Status</th>
                                                 <th scope="col">
                                                     {/* <input type="checkbox" name="" /> &nbsp; &nbsp; */}
-                                                    <button className='bg-danger text-white me-2' onClick={()=>finalSoftDelete()}>Delete</button>
+                                                    <button className='badge bg-danger text-white me-2' onClick={()=>finalSoftDelete()}>Delete</button>
                                                 </th>
 
                                                 <th scope="col">Action</th>
@@ -247,7 +247,7 @@ export default function ViewCourse() {
 
                                                         <td>
                                                             <Link to={`/add-course/${course._id}`}>
-                                                            <button className='bg-success text-white me-2 border border-0 px-3'>Edit</button>
+                                                            <button className=' badge bg-primary text-white me-2 border border-0 px-3'>Edit</button>
                                                             </Link>
                                                         </td>
                                                     </tr>

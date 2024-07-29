@@ -11,6 +11,8 @@ import 'react-toastify/dist/ReactToastify.css';
 export default function ViewVideos() {
     let [allVideo, setAllVideo] = useState([])
     let {formStatus,setFormStatus,formUpdate, setFormUpdate} = useContext(MainContext)
+    let [changeStatusValue, setChangeStatusValue] = useState(false)
+
 
     useEffect(()=>{
         if (formStatus.status == true ) {
@@ -41,9 +43,38 @@ export default function ViewVideos() {
         });
     }
 
+    let changeStatus = (id,status)=>{
+
+        const data = {
+            id:id,
+            status: !status
+        }
+
+        axios.put('http://localhost:8000/api/backend/videos/change-status',data).then(
+            (result)=>{
+                if (result.data.status == true) {
+
+                    toast.success(result.data.message)
+                   
+                    setChangeStatusValue(!changeStatusValue)
+                    
+                }else{
+                    toast.error(result.data.message)
+
+                }
+
+        }).catch(
+            ()=>{
+                toast.error('somthing went wrong')
+
+
+            }
+        )
+    }
+
     useEffect(() => {
         getAllDetails()
-    }, [])
+    }, [changeStatusValue])
 
     // console.log(allVideo);
 
@@ -84,7 +115,7 @@ export default function ViewVideos() {
                                                 <th scope="col">Video Topic</th>
                                                 <th scope="col">Video Link</th>
                                                 <th scope="col">Status</th>
-                                                <th scope="col"><button className='bg-danger text-white me-2'>Delete</button>
+                                                <th scope="col"><button className='badge bg-danger text-white me-2'>Delete</button>
                                                 </th>
                                                 <th scope="col">Action</th>
                                             </tr>
@@ -95,10 +126,9 @@ export default function ViewVideos() {
                                                     <tr key={video._id}>
                                                         <th scope="row">{index + 1}</th>
                                                         <td>{video.category}</td>
-                                                        
                                                         <td>{video.topic}</td>
                                                         <td>{video.link}</td>
-                                                        <td>
+                                                        {/* <td>
                                                             <span
                                                                 className={`badge ${video.status === true ? 'text-bg-warning' : 'text-bg-danger'
                                                                     } text-white`}
@@ -106,6 +136,15 @@ export default function ViewVideos() {
                                                                 {video.status === true ? 'Active' : 'Deactive'}
                                                             </span>
 
+                                                        </td> */}
+                                                        <td>
+
+                                                            <span
+                                                                className={`badge ${video.status === true ? 'text-bg-success px-3' : 'text-bg-danger'
+                                                                    } text-white`} onClick={ ()=>changeStatus(video._id,video.status)}
+                                                            >
+                                                                {video.status === true ? 'Active' : 'Deactive'}
+                                                            </span>
                                                         </td>
                                                         <th scope="col">
                                                             <input type="checkbox" name="" />
@@ -113,7 +152,7 @@ export default function ViewVideos() {
 
                                                         <td>
                                                             {/* <button className='bg-danger text-white me-2 border border-0'>Delete</button> */}
-                                                            <button className='bg-success text-white border border-0 px-3'>Edit</button>
+                                                            <button className=' badge bg-primary text-white border border-0 px-3'>Edit</button>
                                                         </td>
                                                     </tr>
                                                 ))
