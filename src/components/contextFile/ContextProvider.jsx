@@ -14,9 +14,16 @@ export default function ContextProvider({ children}) {
         }
     )
 
+    let[formUpdate, setFormUpdate] = useState(
+        {
+            status : false,
+            message : ""
+        }
+    )
+
     return (
         <>
-            <MainContext.Provider value={{formStatus,setFormStatus}}>
+            <MainContext.Provider value={{formStatus,setFormStatus,formUpdate, setFormUpdate}}>
 
                 {children}
 

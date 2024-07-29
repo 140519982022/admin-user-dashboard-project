@@ -17,20 +17,43 @@ export default function ViewCourse() {
 
     let [deleteIds, setDeleteIds] = useState([])
 
-    let {formStatus,setFormStatus} = useContext(MainContext)
+    let {formStatus,setFormStatus,formUpdate, setFormUpdate} = useContext(MainContext)
 
-    console.log("view course page")
+    // console.log("view course page")
 
-    console.log(formStatus)
+    // console.log(formStatus)
 
     useEffect(()=>{
         if (formStatus.status == true ) {
-            
-            toast.success(formStatus.message)
+            setFormUpdate(
+                {
+                    status:false,
+                    message: ""
+                }
+            )
+            if (formUpdate.status == false) {
+                
+                toast.success(formStatus.message)
+            }
             
         }
         
     },[formStatus])
+
+    useEffect(()=>{
+        if (formUpdate.status == true ) {
+            
+            toast.success(formUpdate.message)
+            setFormStatus(
+                {
+                    status:false,
+                    message: ""
+                }
+            )
+            
+        }
+        
+    },[formUpdate])
 
     let getAllDetails = () => {
         axios.post(`http://localhost:8000/api/backend/courses/view`)

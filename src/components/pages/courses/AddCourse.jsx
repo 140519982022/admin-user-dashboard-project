@@ -23,7 +23,7 @@ export default function AddCourse() {
         course_order : ""
     })
 
-    let {formStatus,setFormStatus} = useContext(MainContext)
+    let {formStatus,setFormStatus,formUpdate, setFormUpdate} = useContext(MainContext)
 
     useEffect(()=>{
         console.log(formStatus)
@@ -104,6 +104,12 @@ export default function AddCourse() {
                     
                 }else{
                     // setSubmitForm(false)
+                    setFormStatus(
+                        {
+                            status : false,
+                            message : result.data.message
+                        }
+                    )
                     toast.error(result.data.message)
 
                 }
@@ -128,7 +134,8 @@ export default function AddCourse() {
                 if (result.data.status == true) {
 
                     setSubmitForm(true)
-                    setFormStatus(
+                   
+                    setFormUpdate(
                         {
                             status : true,
                             message : result.data.message
@@ -137,6 +144,12 @@ export default function AddCourse() {
                     
                 }else{
                     // setSubmitForm(false)
+                    setFormUpdate(
+                        {
+                            status : false,
+                            message : result.data.message
+                        }
+                    )
                     toast.error(result.data.message)
 
                 }
