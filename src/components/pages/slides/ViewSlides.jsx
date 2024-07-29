@@ -17,7 +17,7 @@ export default function ViewSlides() {
                         <div className='p-5'>
                             <div className='d-flex justify-content-between py-3 w-75'>
                                 <h5 className='text-capitalize text-dark fw-bolder'>
-                                    Welcome To View Slider Table
+                                    Welcome To View slide Table
                                 </h5>
                                 <div class="d-flex" role="search">
                                     <input className="form-control me-2 position-relative" type="search" placeholder="       Search Mockups Logos.." aria-label="Search" />
@@ -35,13 +35,13 @@ export default function ViewSlides() {
                                             <thead>
                                                 <tr>
                                                     <th scope="col">S.no</th>
-                                                    <th scope="col">Slider Heading</th>
+                                                    <th scope="col">slide Heading</th>
                                                     <th scope="col"><button className='bg-danger text-white me-2'>Delete</button>
                                                         <input type="checkbox" name="" />
                                                     </th>
-                                                    <th scope="col">Slider sub-heading</th>
-                                                    <th scope="col">Slider Description</th>
-                                                    <th scope="col">Slider Image</th>
+                                                    <th scope="col">slide sub-heading</th>
+                                                    <th scope="col">slide Description</th>
+                                                    <th scope="col">slide Image</th>
                                                     <th scope="col">Status</th>
 
                                                     <th scope="col">Action</th>

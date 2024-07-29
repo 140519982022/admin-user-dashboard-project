@@ -66,11 +66,11 @@ let allRouters = createBrowserRouter([
     element: <ViewVideos/>
   },
   {
-    path: '/add-slider',
+    path: '/add-slide',
     element: <AddSlides/>
   },
   {
-    path: '/view-slider',
+    path: '/view-slide',
     element: <ViewSlides/>
   },
   {

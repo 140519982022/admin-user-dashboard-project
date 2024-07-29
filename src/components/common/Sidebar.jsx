@@ -97,8 +97,8 @@ export default function Sidebar() {
                     <div className='dashboard-nav-dropdown'>
                         <a href="#!" className="dashboard-nav-item dashboard-nav-dropdown-toggle"><i className="fas fa-money-check-alt"></i> Slides </a>
                         <div className='dashboard-nav-dropdown-menu'>
-                            <Link to={'/add-slider'} className="dashboard-nav-dropdown-item"><li>Add Slides</li></Link>
-                            <Link to={'/view-slider'} className="dashboard-nav-dropdown-item"><li>View Slides</li></Link>
+                            <Link to={'/add-slide'} className="dashboard-nav-dropdown-item"><li>Add Slides</li></Link>
+                            <Link to={'/view-slide'} className="dashboard-nav-dropdown-item"><li>View Slides</li></Link>
                         </div>
                     </div>
                     <div className='dashboard-nav-dropdown'>

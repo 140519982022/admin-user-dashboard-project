@@ -12,6 +12,7 @@ export default function ViewVideos() {
     let [allVideo, setAllVideo] = useState([])
     let {formStatus,setFormStatus,formUpdate, setFormUpdate} = useContext(MainContext)
     let [changeStatusValue, setChangeStatusValue] = useState(false)
+    let [deleteIds, setDeleteIds] = useState([])
 
 
     useEffect(()=>{
@@ -34,12 +35,19 @@ export default function ViewVideos() {
 
     let getAllDetails = () => {
         axios.post(`http://localhost:8000/api/backend/videos/view`)
-        .then((response) => {
-            console.log(response.data.data)
-            setAllVideo(response.data.data) // Set only the data array
+        .then((result) => {
+
+            if (result.data.status == true) {
+                
+                setAllVideo(result.data.data) 
+            }else{
+                setAllVideo([])
+            }
+            
         })
         .catch((error) => {
-            console.error("There was an error fetching the data!", error);
+            // console.error("There was an error fetching the data!", error);
+            toast.error('somthing went wrong')
         });
     }
 
@@ -72,11 +80,72 @@ export default function ViewVideos() {
         )
     }
 
+    let selectMultiple = (id)=>{
+
+        let updatedIdArr = [...deleteIds]
+
+        if (updatedIdArr.includes(id)) {
+
+            updatedIdArr = updatedIdArr.filter((video_id)=>{
+                return video_id != id;
+            })
+
+            
+        }else{
+            updatedIdArr.push(id)
+        }
+
+        setDeleteIds(updatedIdArr)
+    }
+
+    let finalSoftDelete = ()=>{
+        // alert("hi")
+        let data = {
+            ids : deleteIds
+        }
+
+        // console.log(data)
+        axios.post('http://localhost:8000/api/backend/videos/multiple-delete', data).then(
+            (result)=>{
+                if (result.data.status == true) {
+
+                    toast.success(result.data.message)
+                    axios.post(`http://localhost:8000/api/backend/videos/view`)
+                    .then((res) => {
+
+                        if (res.data.status == true) {
+                            
+                            setAllVideo(res.data.data) 
+                        }else{
+                            setAllVideo([])
+                        }
+                        
+                    })
+                    .catch((error) => {
+                        // console.error("There was an error fetching the data!", error);
+                        toast.error('somthing went wrong')
+                    });
+                    
+                }else{
+                    toast.error(result.data.message)
+
+                }
+
+        }).catch(
+            (error)=>{
+                toast.error('somthing went wrong')
+
+
+            }
+        )
+
+    }
+
     useEffect(() => {
         getAllDetails()
     }, [changeStatusValue])
 
-    // console.log(allVideo);
+    // console.log(deleteIds);
 
     return (
         <>
@@ -115,7 +184,7 @@ export default function ViewVideos() {
                                                 <th scope="col">Video Topic</th>
                                                 <th scope="col">Video Link</th>
                                                 <th scope="col">Status</th>
-                                                <th scope="col"><button className='badge bg-danger text-white me-2'>Delete</button>
+                                                <th scope="col"><button className='badge bg-danger text-white me-2' onClick={()=>finalSoftDelete()}>Delete</button>
                                                 </th>
                                                 <th scope="col">Action</th>
                                             </tr>
@@ -147,7 +216,7 @@ export default function ViewVideos() {
                                                             </span>
                                                         </td>
                                                         <th scope="col">
-                                                            <input type="checkbox" name="" />
+                                                            <input type="checkbox" onClick={()=>selectMultiple(video._id)}/>
                                                         </th>
 
                                                         <td>

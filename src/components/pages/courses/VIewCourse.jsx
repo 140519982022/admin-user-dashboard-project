@@ -134,10 +134,10 @@ export default function ViewCourse() {
 
                     toast.success(result.data.message)
                     axios.post(`http://localhost:8000/api/backend/courses/view`)
-                    .then((response) => {
-                        if (response.data.status == true) {
-                            // console.log(response.data.data)
-                            setAlluser(response.data.data) // Set only the data array
+                    .then((res) => {
+                        if (res.data.status == true) {
+                            // console.log(res.data.data)
+                            setAlluser(res.data.data) // Set only the data array
                         }else{
                             setAlluser([]) 
 
@@ -156,7 +156,7 @@ export default function ViewCourse() {
                 }
 
         }).catch(
-            ()=>{
+            (error)=>{
                 toast.error('somthing went wrong')
 
 

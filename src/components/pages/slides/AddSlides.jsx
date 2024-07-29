@@ -15,7 +15,7 @@ export default function AddSlides() {
                     <div className='main-content'>
                         <Header />
                         <div className='p-5'>
-                        <h1 className='fw-bold text-danger'>Slider</h1>
+                        <h1 className='fw-bold text-danger'>slide</h1>
 
 <div className='container'>
     <div className=''>
@@ -23,29 +23,29 @@ export default function AddSlides() {
         <div className='w-100 mx-auto  m-3 shadow-lg p-5 bg-body rounded border'>
             <form>
                 <div className="form-group">
-                    <label for="exampleInputEmail1" className='fw-bold pb-3'>Slider Heading</label>
+                    <label for="exampleInputEmail1" className='fw-bold pb-3'>slide Heading</label>
                     <input type="text" className="form-control mb-3" aria-describedby="emailHelp"
-                        placeholder="Enter slider heading" />
+                        placeholder="Enter slide heading" />
                 </div>
                 <div className="form-group">
-                    <label for="exampleInputPassword1" className='fw-bold pb-3'>Slider
+                    <label for="exampleInputPassword1" className='fw-bold pb-3'>slide
                         Sub-Heading</label>
                     <input type="text" className="form-control"
-                        placeholder="enter slider sub-heading" />
+                        placeholder="enter slide sub-heading" />
                 </div>
                 <div className="form-group">
-                    <label for="exampleInputPassword1" className='fw-bold pb-3'>Slider Image</label>
+                    <label for="exampleInputPassword1" className='fw-bold pb-3'>slide Image</label>
                     <input type="file" className="form-control" />
                 </div>
                 <div className="form-group">
-                    <label for="exampleInputPassword1" className='fw-bold py-3'>Slider
+                    <label for="exampleInputPassword1" className='fw-bold py-3'>slide
                         Description</label>
                     <textarea name="" className="form-control" rows={3}
-                        placeholder='enter slider desciption'></textarea>
+                        placeholder='enter slide desciption'></textarea>
                 </div>
 
                 <div className="form-group pb-5">
-                    <label for="exampleInputEmail1" className='fw-bold py-3'>Slider Status</label>
+                    <label for="exampleInputEmail1" className='fw-bold py-3'>slide Status</label>
                     <br />
                     <input type="radio" name="course_status" /> &nbsp;&nbsp;&nbsp;
                     <label for="active" className='fw-bold py-2'>Active</label>&nbsp;&nbsp;&nbsp;
