@@ -67,6 +67,16 @@ export default function AddVideos() {
                                         <div className="form-group">
                                             <label className='fw-bold py-3'>Course Category</label>
                                             <input type="text" name='video_category' className="form-control mb-3" placeholder="Enter course category" />
+                                            <option value=""></option>
+                                        </div>
+                                        <div class="mb-3">
+                                        <div class="mb-3">
+                                        <label for="disabledSelect" class="form-label">Disabled select menu</label>
+                                        <select id="disabledSelect" class="form-select">
+                                            <option>Disabled select</option>
+                                        </select>
+                                        </div>
+
                                         </div>
                                         <div className="form-group">
                                             <label className='fw-bold py-3'>Video Topic</label>

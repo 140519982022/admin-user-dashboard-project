@@ -23,13 +23,14 @@ export default function ViewCourse() {
 
     console.log(formStatus)
 
-    if (changeStatusValue == false) {
+    useEffect(()=>{
         if (formStatus.status == true ) {
             
             toast.success(formStatus.message)
+            
         }
         
-    }
+    },[formStatus])
 
     let getAllDetails = () => {
         axios.post(`http://localhost:8000/api/backend/courses/view`)
@@ -37,6 +38,7 @@ export default function ViewCourse() {
             if (response.data.status == true) {
                 // console.log(response.data.data)
                 setAlluser(response.data.data) // Set only the data array
+                
             }else{
                 setAlluser([]) 
 
@@ -61,6 +63,7 @@ export default function ViewCourse() {
                 if (result.data.status == true) {
 
                     toast.success(result.data.message)
+                   
                     setChangeStatusValue(!changeStatusValue)
                     
                 }else{
@@ -189,8 +192,8 @@ export default function ViewCourse() {
                                                 <th scope="col">Image</th>
                                                 <th scope="col">Status</th>
                                                 <th scope="col">
-                                                    <button type="button" class="btn btn-danger" onClick={()=>finalSoftDelete()}>Delete</button>
-
+                                                    {/* <input type="checkbox" name="" /> &nbsp; &nbsp; */}
+                                                    <button className='bg-danger text-white me-2' onClick={()=>finalSoftDelete()}>Delete</button>
                                                 </th>
 
                                                 <th scope="col">Action</th>
