@@ -1,14 +1,19 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Header from '../../common/Header'
 import Sidebar from '../../common/Sidebar'
 import Footer from '../../common/Footer'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import { toast } from 'react-toastify'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { MainContext } from '../../contextFile/ContextProvider'
 
 export default function AddVideos() {
     let [submitForm, setSubmitForm] = useState(false)
+    let [fetchCourseCategory, setFetchCourseCategory] = useState([])
     let navigator = useNavigate()
+    let {formStatus,setFormStatus,formUpdate, setFormUpdate} = useContext(MainContext)
+
     let saveFormeData = (event) => {
         // alert("hihih");
         event.preventDefault();
@@ -27,16 +32,24 @@ export default function AddVideos() {
         }
 
         // console.log(formData)
+
+        console.log(formData)
         axios.post(`http://localhost:8000/api/backend/videos/add`, formData)
-        .then(response => {
-            console.log(response)
-            if (response.data.status == true) {
+        .then(result => {
+            // console.log(result)
+            if (result.data.status == true) {
                 setSubmitForm(true)
-                toast.success(response.data.message)
+                // toast.success(result.data.message)
+                setFormStatus(
+                    {
+                        status : true,
+                        message : result.data.message
+                    }
+                )
 
             } else {
                 // setSubmitForm(false)
-                toast.error(response.data.message)
+                toast.error(result.data.message)
             }
         })
         .catch(error => {
@@ -46,11 +59,45 @@ export default function AddVideos() {
         });
     }
 
+    let fetchCourseCategories = () => {
+
+        axios.post('http://localhost:8000/api/backend/videos/course-category').then(
+            (result) => {
+
+                if (result.data.status == true) {
+                    setFetchCourseCategory(result.data.data)
+
+                } else {
+                    toast.error(result.data.message)
+                }
+
+            }
+        ).catch(
+            (error) => {
+                toast.error("somthing went wrong")
+
+            }
+        )
+
+    }
+
+    // let getSelectedCategory = (id) => {
+    //     alert("hi")
+    //     console.log(id)
+    // }
+
     useEffect(() => {
         if (submitForm == true) {
             navigator('/view-videos')
         }
     }, [submitForm])
+
+    // call http://localhost:8000/api/backend/videos/course-category this api
+    useEffect(() => {
+        fetchCourseCategories()
+    }, [])
+
+    // console.log(fetchCourseCategory)
 
     return (
         <>
@@ -63,19 +110,28 @@ export default function AddVideos() {
                             <h1 className='fw-bold text-danger'>Add Videos</h1>
                             <div className='container'>
                                 <div className='w-70 mx-auto p-5 shadow-lg p-3 bg-body rounded border'>
+                                    <ToastContainer />
+
                                     <form onSubmit={saveFormeData}>
-                                        <div className="form-group">
+                                        {/* <div className="form-group">
                                             <label className='fw-bold py-3'>Course Category</label>
                                             <input type="text" name='video_category' className="form-control mb-3" placeholder="Enter course category" />
                                             <option value=""></option>
-                                        </div>
+                                        </div> */}
                                         <div class="mb-3">
-                                        <div class="mb-3">
-                                        <label for="disabledSelect" class="form-label">Disabled select menu</label>
-                                        <select id="disabledSelect" class="form-select">
-                                            <option>Disabled select</option>
-                                        </select>
-                                        </div>
+                                            <label className='fw-bold py-3'>Course Category</label>
+                                            <select name='video_category' className="form-control mb-3">
+                                                <option value="">Select course category</option>
+                                                {fetchCourseCategory.length > 0 ? (
+                                                    fetchCourseCategory.map((courseCategory, index) => (
+                                                        <option key={index} value={courseCategory.name}>
+                                                            {courseCategory.name}
+                                                        </option>
+                                                    ))
+                                                ) : (
+                                                    <option>No categories available</option>
+                                                )}
+                                            </select>
 
                                         </div>
                                         <div className="form-group">
@@ -94,6 +150,8 @@ export default function AddVideos() {
                                             <label for="deactive" className='fw-bold py-2'>Deactive</label>
                                         </div>
                                         <button type="submit" className="btn btn-primary fw-bold ">Submit</button>
+                                        {/* <Link to={'/'}>
+                                        </Link> */}
                                         <button type="button" className="btn btn-warning fw-bold ms-5">Cancel</button>
                                     </form>
                                 </div>

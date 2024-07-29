@@ -1,12 +1,34 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { CiSearch } from "react-icons/ci";
 import Header from '../../common/Header';
 import Sidebar from '../../common/Sidebar';
 import Footer from '../../common/Footer';
 import axios from 'axios';
+import { MainContext } from '../../contextFile/ContextProvider';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function ViewVideos() {
     let [allVideo, setAllVideo] = useState([])
+    let {formStatus,setFormStatus,formUpdate, setFormUpdate} = useContext(MainContext)
+
+    useEffect(()=>{
+        if (formStatus.status == true ) {
+            // setFormUpdate(
+            //     {
+            //         status:false,
+            //         message: ""
+            //     }
+            // )
+            // if (formUpdate.status == false) {
+                
+                toast.success(formStatus.message)
+            // }
+            
+        }
+        
+    },[formStatus])
+
 
     let getAllDetails = () => {
         axios.post(`http://localhost:8000/api/backend/videos/view`)
@@ -50,17 +72,20 @@ export default function ViewVideos() {
                             <button type="button" class="btn btn-outline-dark my-3 rounded-pill">All Courses Videos</button>
 
                             <div className='container'>
+                            <ToastContainer />
+
                                 <div className='w-70 mx-auto p-5 m-5 shadow-lg p-3 bg-body rounded border'>
                                     <table class="table mt-5 table-bordered border-dark">
                                         <thead>
                                             <tr>
                                                 <th scope="col">S.no</th>
                                                 <th scope="col">Course Category</th>
-                                                <th scope="col"><button className='bg-danger text-white me-2'>Delete</button>
-                                                </th>
+                                                
                                                 <th scope="col">Video Topic</th>
                                                 <th scope="col">Video Link</th>
                                                 <th scope="col">Status</th>
+                                                <th scope="col"><button className='bg-danger text-white me-2'>Delete</button>
+                                                </th>
                                                 <th scope="col">Action</th>
                                             </tr>
                                         </thead>
@@ -70,9 +95,7 @@ export default function ViewVideos() {
                                                     <tr key={video._id}>
                                                         <th scope="row">{index + 1}</th>
                                                         <td>{video.category}</td>
-                                                        <th scope="col">
-                                                            <input type="checkbox" name="" />
-                                                        </th>
+                                                        
                                                         <td>{video.topic}</td>
                                                         <td>{video.link}</td>
                                                         <td>
@@ -84,6 +107,9 @@ export default function ViewVideos() {
                                                             </span>
 
                                                         </td>
+                                                        <th scope="col">
+                                                            <input type="checkbox" name="" />
+                                                        </th>
 
                                                         <td>
                                                             {/* <button className='bg-danger text-white me-2 border border-0'>Delete</button> */}
