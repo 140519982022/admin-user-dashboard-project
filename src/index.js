@@ -57,7 +57,7 @@ let allRouters = createBrowserRouter([
   },
 
   {
-    path: '/add-videos',
+    path: '/add-videos/:video_id?',
     element: <AddVideos/>
   },
 

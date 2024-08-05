@@ -19,6 +19,8 @@ export default function ViewCourse() {
 
     let {formStatus,setFormStatus,formUpdate, setFormUpdate} = useContext(MainContext)
 
+    let[imagePath,setImagePath]=useState()
+
     // console.log("view course page")
 
     // console.log(formStatus)
@@ -57,10 +59,11 @@ export default function ViewCourse() {
 
     let getAllDetails = () => {
         axios.post(`http://localhost:8000/api/backend/courses/view`)
-        .then((response) => {
-            if (response.data.status == true) {
-                // console.log(response.data.data)
-                setAlluser(response.data.data) // Set only the data array
+        .then((result) => {
+            if (result.data.status == true) {
+                // console.log(result.data.data)
+                setImagePath(result.data.imagepath)
+                setAlluser(result.data.data) // Set only the data array
                 
             }else{
                 setAlluser([]) 
@@ -230,7 +233,8 @@ export default function ViewCourse() {
                                                         <td>{course.name}</td>
                                                         <td>{course.price}</td>
                                                         <td>{course.duration}</td>
-                                                        <td>{course.image}</td>
+                                                        <td>
+                                                            <img src={imagePath + course.image} width={70} height={50} alt="" /></td>
                                                         
                                                         <td>
 

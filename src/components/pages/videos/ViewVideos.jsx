@@ -7,6 +7,7 @@ import axios from 'axios';
 import { MainContext } from '../../contextFile/ContextProvider';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Link } from 'react-router-dom';
 
 export default function ViewVideos() {
     let [allVideo, setAllVideo] = useState([])
@@ -15,22 +16,54 @@ export default function ViewVideos() {
     let [deleteIds, setDeleteIds] = useState([])
 
 
+    // useEffect(()=>{
+    //     if (formStatus.status == true ) {
+    //         // setFormUpdate(
+    //         //     {
+    //         //         status:false,
+    //         //         message: ""
+    //         //     }
+    //         // )
+    //         // if (formUpdate.status == false) {
+                
+    //             toast.success(formStatus.message)
+    //         // }
+            
+    //     }
+        
+    // },[formStatus])
+
     useEffect(()=>{
         if (formStatus.status == true ) {
-            // setFormUpdate(
-            //     {
-            //         status:false,
-            //         message: ""
-            //     }
-            // )
-            // if (formUpdate.status == false) {
+            setFormUpdate(
+                {
+                    status:false,
+                    message: ""
+                }
+            )
+            if (formUpdate.status == false) {
                 
                 toast.success(formStatus.message)
-            // }
+            }
             
         }
         
     },[formStatus])
+
+    useEffect(()=>{
+        if (formUpdate.status == true ) {
+            
+            toast.success(formUpdate.message)
+            setFormStatus(
+                {
+                    status:false,
+                    message: ""
+                }
+            )
+            
+        }
+        
+    },[formUpdate])
 
 
     let getAllDetails = () => {
@@ -221,7 +254,9 @@ export default function ViewVideos() {
 
                                                         <td>
                                                             {/* <button className='bg-danger text-white me-2 border border-0'>Delete</button> */}
+                                                            <Link to={`/add-videos/${video._id}`}>
                                                             <button className=' badge bg-primary text-white border border-0 px-3'>Edit</button>
+                                                            </Link>
                                                         </td>
                                                     </tr>
                                                 ))

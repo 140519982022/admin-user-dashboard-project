@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import Header from '../../common/Header'
 import Sidebar from '../../common/Sidebar'
 import Footer from '../../common/Footer'
-import axios from 'axios'
+import axios, { toFormData } from 'axios'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate, useParams } from 'react-router-dom'
@@ -73,24 +73,42 @@ export default function AddCourse() {
             var status = event.target.course_status.value;
         }
 
+        let form = new FormData(event.target)
+
+        // console.log(form)
+
         let formData = {
-            name : event.target.course_name.value,
-            price: event.target.course_price.value,
-            duration: event.target.course_duration.value,
+            name : form.get('course_name'),
+            price: form.get('course_price'),
+            duration: form.get('course_duration'),
             order: order,
-            description: event.target.course_description.value,
-            image: event.target.course_name.value,
+            description: form.get('course_description'),
             status: status,
+
+            // name : event.target.course_name.value,
+            // price: event.target.course_price.value,
+            // duration: event.target.course_duration.value,
+            // order: order,
+            // description: event.target.course_description.value,
+            // image: event.target.course_name.value,
+            // status: status,
 
         }
 
+        if (form.get('course_image') != '') {
+
+            formData.image = form.get('course_image')
+            
+        }
+
+        // console.log(formData)
         // console.log(formData)
 
         if (params.course_id == undefined) {
             // console.log("undefined id 111111111111")
-            axios.post(`http://localhost:8000/api/backend/courses/add`, formData)
+            axios.post(`http://localhost:8000/api/backend/courses/add`, toFormData(formData))
             .then(result => {
-                console.log(result)
+                // console.log(result)
                 if (result.data.status == true) {
 
                     setSubmitForm(true)
@@ -116,7 +134,7 @@ export default function AddCourse() {
 
             })
             .catch(error => {
-                console.log('There was an error!', error);
+                // console.log('There was an error!', error);
                 toast.error("spmthing went wrong")
 
             });
@@ -126,9 +144,9 @@ export default function AddCourse() {
 // console.log(params.course_id)
             formData.id = params.course_id
 
-            // console.log(formData)
+            console.log(formData)
 
-            axios.put('http://localhost:8000/api/backend/courses/update', formData)
+            axios.put('http://localhost:8000/api/backend/courses/update', toFormData(formData) )
             .then(result => {
                 // console.log(result)
                 if (result.data.status == true) {
@@ -216,7 +234,7 @@ export default function AddCourse() {
                                        
                                         <div className="form-group">
                                             <label for="exampleInputEmail1" className='fw-bold py-3'>Course Image</label>
-                                            <input type="file" name='course_images' className="form-control mb-3" placeholder="select logo" onChange={inputHandeler}/>
+                                            <input type="file" name='course_image' className="form-control mb-3" placeholder="select logo" onChange={inputHandeler}/>
                                         </div>
                                         <div className="form-group pb-5">
                                             <label for="exampleInputEmail1" className='fw-bold py-3'>Course Status</label> <br />
