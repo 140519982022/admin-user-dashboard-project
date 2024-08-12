@@ -21,13 +21,13 @@ export default function AddVideos() {
         video_status : ""
     })
 
-    console.log(params.video_id)
+    // console.log(params.video_id)
 
     useEffect(()=>{
         if(params.video_id != undefined){
             axios.post('http://localhost:8000/api/backend/videos/detail/'+params.video_id).then((result)=>{
                 setInput({
-                    video_category : result.data.data.category,
+                    video_category : result.data.data.category_id,
                     video_topic : result.data.data.topic,
                     video_link : result.data.data.link,
                     video_status : result.data.data.status
@@ -50,13 +50,13 @@ export default function AddVideos() {
         }
 
         let formData = {
-            category: event.target.video_category.value,
+            category_id: event.target.video_category.value,
             topic: event.target.video_topic.value,
             link: event.target.video_link.value,
             status: status,
         }
 
-        // console.log(formData)
+        console.log(formData)
         if (params.video_id == undefined) {
 
             axios.post(`http://localhost:8000/api/backend/videos/add`, formData)
@@ -173,7 +173,7 @@ export default function AddVideos() {
         fetchCourseCategories()
     }, [])
 
-    // console.log(fetchCourseCategory)
+    console.log(fetchCourseCategory)
 
     return (
         <>
@@ -189,20 +189,14 @@ export default function AddVideos() {
                                     <ToastContainer />
 
                                     <form onSubmit={saveFormeData}>
-                                        {/* <div className="form-group">
-                                            <label className='fw-bold py-3'>Course Category</label>
-                                            <input type="text" name='video_category' className="form-control mb-3" placeholder="Enter course category" />
-                                            <option value=""></option>
-                                        </div> */}
-                                     
                                         <div class="mb-3">
                                             <label className='fw-bold py-3'>Course Category</label>
                                             <select name='video_category' className="form-control mb-3">
                                                 <option  >Select video category</option>
                                                 {fetchCourseCategory.length > 0 ? (
                                                     fetchCourseCategory.map((courseCategory, index) => (
-                                                        <option key={index} value={(params.video_id != undefined ? courseCategory.name : input.video_category)} onChange={inputHandeler} selected={(input.video_category == courseCategory.name)? 'selected' : '' }>
-                                                            {courseCategory.name}
+                                                        <option key={index} value={courseCategory._id} onChange={inputHandeler} selected={(input.video_category == courseCategory._id)? 'selected' : '' }>
+                                                            {(courseCategory.status) ? courseCategory.name : "This Course Category Is Deactivated"}
                                                         </option>
                                                     ))
                                                 ) : (
@@ -227,8 +221,6 @@ export default function AddVideos() {
                                             <label for="deactive" className='fw-bold py-2'>Deactive</label>
                                         </div>
                                         <button type="submit" className="btn btn-primary fw-bold ">Submit</button>
-                                        {/* <Link to={'/'}>
-                                        </Link> */}
                                         <button type="button" className="btn btn-warning fw-bold ms-5">Cancel</button>
                                     </form>
                                 </div>

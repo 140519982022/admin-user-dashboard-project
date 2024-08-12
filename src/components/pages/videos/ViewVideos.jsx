@@ -8,6 +8,7 @@ import { MainContext } from '../../contextFile/ContextProvider';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Link } from 'react-router-dom';
+// mxzr ncfr gnlk hfsg // gmail app password
 
 export default function ViewVideos() {
     let [allVideo, setAllVideo] = useState([])
@@ -179,6 +180,9 @@ export default function ViewVideos() {
     }, [changeStatusValue])
 
     // console.log(deleteIds);
+    // console.log(allVideo[27].category_id.name)
+    // console.log(allVideo)
+
 
     return (
         <>
@@ -227,18 +231,9 @@ export default function ViewVideos() {
                                                 allVideo.map((video, index) => (
                                                     <tr key={video._id}>
                                                         <th scope="row">{index + 1}</th>
-                                                        <td>{video.category}</td>
+                                                        <td>{video.category_id.name}</td>
                                                         <td>{video.topic}</td>
                                                         <td>{video.link}</td>
-                                                        {/* <td>
-                                                            <span
-                                                                className={`badge ${video.status === true ? 'text-bg-warning' : 'text-bg-danger'
-                                                                    } text-white`}
-                                                            >
-                                                                {video.status === true ? 'Active' : 'Deactive'}
-                                                            </span>
-
-                                                        </td> */}
                                                         <td>
 
                                                             <span
@@ -253,7 +248,6 @@ export default function ViewVideos() {
                                                         </th>
 
                                                         <td>
-                                                            {/* <button className='bg-danger text-white me-2 border border-0'>Delete</button> */}
                                                             <Link to={`/add-videos/${video._id}`}>
                                                             <button className=' badge bg-primary text-white border border-0 px-3'>Edit</button>
                                                             </Link>
