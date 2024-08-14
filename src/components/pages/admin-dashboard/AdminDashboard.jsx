@@ -33,10 +33,10 @@ export default function AdminDashboard() {
                                         <div className="col-md-3">
                                             <div className='bg-info text-white p-3 rounded-4 mb-4'>
                                                 <p>
-                                                    Today's Booking
+                                                    Total Courses
                                                 </p>
                                                 <p className='display-5 fw-semibold'>
-                                                    4006
+                                                    20
                                                 </p>
                                                 <p>
                                                     10.00% <span>(30 days)</span>
@@ -47,10 +47,10 @@ export default function AdminDashboard() {
                                         <div className="col-md-3">
                                             <div className='bg-primary text-white p-3 rounded-4 mb-4'>
                                                 <p>
-                                                    Today's Booking
+                                                    Total Videos
                                                 </p>
                                                 <p className='display-5 fw-semibold'>
-                                                    4006
+                                                    99
                                                 </p>
                                                 <p>
                                                     10.00% <span>(30 days)</span>
@@ -61,10 +61,10 @@ export default function AdminDashboard() {
                                         <div className="col-md-3">
                                             <div className='bg-warning text-white p-3 rounded-4 mb-4'>
                                                 <p>
-                                                    Today's Booking
+                                                Active Courses
                                                 </p>
                                                 <p className='display-5 fw-semibold'>
-                                                    4006
+                                                    18
                                                 </p>
                                                 <p>
                                                     10.00% <span>(30 days)</span>
@@ -75,10 +75,10 @@ export default function AdminDashboard() {
                                         <div className="col-md-3">
                                             <div className='bg-danger text-white p-3 rounded-4 mb-4'>
                                                 <p>
-                                                    Today's Booking
+                                                    Deactive Courses
                                                 </p>
                                                 <p className='display-5 fw-semibold'>
-                                                    4006
+                                                    2
                                                 </p>
                                                 <p>
                                                     10.00% <span>(30 days)</span>

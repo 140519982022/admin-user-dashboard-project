@@ -248,7 +248,7 @@ export default function ViewVideos() {
                                                         </th>
 
                                                         <td>
-                                                            <Link to={`/add-videos/${video._id}`}>
+                                                            <Link to={`/add-videos/${video._id}/${video.category_id._id}`}>
                                                             <button className=' badge bg-primary text-white border border-0 px-3'>Edit</button>
                                                             </Link>
                                                         </td>
